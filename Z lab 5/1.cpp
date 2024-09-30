@@ -1,93 +1,59 @@
 #include <iostream>
+#include <string>
+#include <stack>
+#include <algorithm>
+#include <vector>
 using namespace std;
 
-class Stack {
-    int top;
-    int arr[10000];
-
-public:
-    Stack() : top(-1) {}
-
-    void push(int n) {
-        if (top < 9999) { 
-            arr[++top] = n;
-        } else {
-            cout << "Stack overflow" << endl;
-        }
+void sortRecursive(vector<int>& arr, int i = 0, int j = 0){
+    int n = arr.size();
+    if(i == n-1)
+        return;
+        
+    if(arr[j+1] < arr[j]){
+        swap(arr[j+1], arr[j]);
     }
-
-    void pop() {
-        if (top > -1) {
-            top--;
-        } else {
-            cout << "Stack underflow" << endl;
-        }
-    }
-
-    int peek() {
-        if (top > -1) {
-            return arr[top];
-        } else {
-            cout << "Stack is empty" << endl;
-            return -1; 
-        }
-    }
-
-    void print() {
-        Stack temp;
         
-        
-        while (top > -1) {
-            cout << peek() << " "; 
-            temp.push(peek());
-            pop();
-        }
-        
-       
-        while (temp.top > -1) {
-            push(temp.peek());
-            temp.pop();
-        }
-        cout << endl;
-    }
-    
-    
-    void seperate(){
-        Stack even;
-        Stack odd;
-        
-        while(top > -1){
-            if(this->peek() & 1) // this is odd
-                odd.push(this->peek());
-            else
-                even.push(this->peek());
-            
-            this->pop();
-        }
-        
-        cout << "Printing Even stack: \n";
-        even.print();
-        
-        cout << "\n\nPrinting Odd Stack: \n";
-        odd.print();
-        
-    }
-};
-
-int main() {
-    Stack s;
-    s.push(10);
-    s.push(3);
-    s.push(20);
-    s.push(5);
-    s.push(30);
-    s.push(19);
-    s.print();
-    // cout << "Top element: " << s.peek() << endl;
-    // s.pop();
-    s.print();
-    cout << "Top element: " << s.peek() << endl; 
-    s.seperate();
-    
-    return 0;
+    if(j == n-1)  
+        sortRecursive(arr, i+1, 0);
+    else
+        sortRecursive(arr, i, j+1);
 }
+
+void sort(vector<int>& arr){
+    int n = arr.size();
+    for(int i = 0; i < n; i++){
+        bool flag = false;
+        
+        for(int j = 0; j < n-1; j++){
+            
+            if(arr[j+1] < arr[j]){
+                swap(arr[j+1], arr[j]);
+                flag = true;
+            }
+        }
+        if(!flag)
+            break;
+    }
+}
+
+void print(vector<int> arr){
+    for(int x : arr){
+        cout << x << " ";
+    }
+    cout << endl << endl;
+}
+
+int main(){
+    vector<int> arr = {5,2,4,8,65,2,1,6,3,0,4,12,76,34,6,2,8,1};
+    sortRecursive(arr);
+    print(arr);
+}
+
+
+
+
+
+
+
+
