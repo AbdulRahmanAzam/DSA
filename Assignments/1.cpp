@@ -1,4 +1,8 @@
 #include <iostream>
+#include <stack>
+#include <queues>
+#include <vector>
+#include <string>
 using namespace std;
 
 class Ticket{
@@ -116,7 +120,10 @@ class Agent{
         void addTicket(int Ticket){
             if(Tickets.size() > 5){
                 cout << "Agent is at full capacity" << endl;
+                availability = false;
+                status = "Unavailable"
             }else{
+                status = "Available"
                 Tickets.push_back(Ticket);
             }
         }        
@@ -132,10 +139,46 @@ class AgentManagement{
         Agent newAgent = new Agent(ID, name);
         Agents.push_back(newAgent);
     }
+    
+    void AssignTickets(service_request_management list){
+        Node* temp = list->head;
+        
+        // it is assigning high priority tickets first
+        vector <pair <int, Ticket>> priorities;
+        int i = 0;
+        while(temp != nullptr){
+            priorities[i++] = temp;
+            temp = temp->next;
+        }
+        
+        for(auto agent : Agents){
+            // when the agent is available and the agent is already assigned some tasks already
+            if(agent.availability == true && agent.Tickets.size() > 0){
+                while(temp != nullptr && agent.availability == true){
+                    agent.addTicket(temp->ID);
+                   temp = temp->next;
+                }
+                
+                // when the agent is available and it was not having any tickets assigned
+            }else if(agent.availability() == true){
+                while(temp != nullptr && agent.availability == true){
+                    agent.addTicket(temp->ID);
+                   temp = temp->next;
+                }
+            }
+        }
+    }
+};
+
+class TransactionLog{
+    public:
+    stack<int> Tlog;
+    queue 
 }
 
 int main() {
     auto now = chrono::system_clock::now();
+    
     
 }
 
