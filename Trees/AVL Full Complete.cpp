@@ -61,7 +61,7 @@ public:
         else
             return root;
         
-        root->height = max(getHeight(root->left), getHeight(root->right)) + 1;
+        root->height = max(getHeight(root->left), getHeight(root->right));
         int balance = getBalance(root);
         
         // LEFT (LL) case
@@ -131,10 +131,10 @@ public:
         }
         
          if(!root){
-            return root;
+            return new Node(data);
         }
         
-        root->height = max(getHeight(root->left), getHeight(root->right)) + 1;
+        root->height = max(getHeight(root->left), getHeight(root->right));
         int balance = getBalance(root);
         
         // LEFT (LL) case
@@ -200,6 +200,72 @@ class FullBinaryTree{
                 q.push(current->right);
         }
         cout << endl << endl;
+    }
+    
+    void deleteDeepest(Node* root, Node* dataNode){
+        queue<Node*> q;
+        q.push(root);
+        
+        Node* temp;
+        while(!q.empty()){
+            temp = q.front();
+            q.pop();
+            
+            if(temp == dataNode->data){
+                delete dataNode;
+                return nullptr;
+            }
+            if(temp->right){
+                if(temp->right == dataNode){
+                    temp->right = nullptr;
+                    delete dataNode;
+                    return root;
+                }else
+                    q.push(temp->right);
+            }
+            if(temp->left){
+                if(temp->left == dataNode){
+                    temp->left = nullptr;
+                    delete dataNode;
+                    return root;
+                }else
+                    q.push(temp->left);
+            }
+        }
+        return root;
+    }
+    
+    Node* deleteNode(Node* root, int data){
+        if(root->data == data){
+            delete root;
+            return nullptr;
+        }else
+            return root;
+            
+        queue<Node*> q;
+        q.push(root);
+        Node* dataNode = nullptr;
+        Node* temp;
+        
+        while(!q.empty()){
+            temp = q.front();
+            q.pop();
+            
+            if(temp->data == data)
+                dataNode = temp;
+                
+            if(temp->left)
+                q.push(temp->left);
+            if(temp->right)
+                q.push(temp->right);
+        }
+        
+        if(keyNode){
+            int x = temp->data;
+            deleteDeepest(root, temp);
+            dataNode->data = x;
+        }
+        return root;
     }
 };
 
