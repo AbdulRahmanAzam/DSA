@@ -131,10 +131,10 @@ public:
         }
         
          if(!root){
-            return new Node(data);
+            return root;
         }
         
-        root->height = max(getHeight(root->left), getHeight(root->right));
+        root->height = max(getHeight(root->left), getHeight(root->right)) + 1;
         int balance = getBalance(root);
         
         // LEFT (LL) case
