@@ -18,7 +18,7 @@ class Ticket{
 
     Ticket* next;
 
-    Ticket(int ID, string name, int priority, string description) : ID(ID), name(name), description(description), priority(priority), status("Open") {
+    Ticket(int ID = 0, string name = "", int priority = 0, string description = "") : ID(ID), name(name), description(description), priority(priority), status("Open") {
         creationTime = new tm;
         closeTime = NULL;
     }
@@ -399,7 +399,33 @@ class TicketManagement{
         }
     }
 
+    void configurationFile(){
+        ifstream inputFile("config.txt");
+        if (!inputFile) {
+            cerr << "Unable to open file config.txt";
+            return ; 
+        }
+        string  choice = "1";
+        string  attribute = "merge";
+        string line1, line2, line3; 
+        int threshold = 21;
+        if (getline(inputFile, line1) && getline(inputFile, line2) && getline(inputFile, line3)) {
+            choice = line1;
+            attribute = line2;
+            threshold = stoi(line3);
+        }
+        inputFile.close();
+        
+        if(threshold < 15){
+            sortTickets(stoi(choice), attribute);
+        }else{
+            // mergesort
+            sortTickets(1, attribute);
+        }
+    }
+
     ~TicketManagement(){
+        // all the nodes of the linked list is deleted
         while(head){
             Ticket* next = head->next;
             delete head;
@@ -417,8 +443,22 @@ class Agent{
     const int MaxOpenTickets = 5;
     vector<int> TicketID;
 
-    Agent(int ID, string name) : ID(ID), name(name), isAvailable(true), openTickets(0) {}
+// default and parametrized constructor
+    Agent(int ID = 0, string name = "") : ID(ID), name(name), isAvailable(true), openTickets(0) {}
 
+    void print(){
+        cout << "Agent ID: " << ID << endl;
+        cout << "Agent Name: " << name << endl;
+        cout << "Agent isAvaailable? " << (isAvailable ? "True" : "False") << endl;
+        cout << "Agent have Open Tickets: " << openTickets << endl;
+        cout << "Agent have the following tickets: " << endl;
+
+        for(auto x : TicketID){
+            cout << x << " ";
+        }
+
+        cout << "\n\n";
+    }
 };
 
 class AgentManagement{
@@ -426,41 +466,202 @@ class AgentManagement{
     vector<Agent> agents;
 
     void addAgent(int ID, string name){
+        // making new agent and adding it to the dynamic array
         Agent newAgent(ID, name);
         agents.push_back(newAgent);
     }
 
-    void assignTickets(){
-        
+    void assignTickets(int ticketID){
+        // if the agent is availabel and it has less open tickets than maxopenTickets
+        // then assign it a ticket and increase openTickets
+        // and check if the open ticket is equals to maxopenticket then make it unavailable
+
+        // if it has already some ticket then assign it first
+        for(auto& x : agents){
+            if(x.isAvailable && x.openTickets != 0 && x.openTickets < x.MaxOpenTickets){
+                x.TicketID.push_back(ticketID);
+                x.openTickets++;
+                
+                if(x.openTickets == x.MaxOpenTickets)
+                    x.isAvailable = false;
+                    
+                cout << "Ticket " << ticketID << " assigned to Agent " << x.ID << endl;
+                return;
+            }
+        }
+
+        // if it is not having any ticket previously
+        for(auto& x : agents){
+            if(x.isAvailable && x.openTickets == 0 && x.openTickets < x.MaxOpenTickets){
+                x.TicketID.push_back(ticketID);
+                x.openTickets++;
+                
+                if(x.openTickets == x.MaxOpenTickets)
+                    x.isAvailable = false;
+                    
+                cout << "Ticket " << ticketID << " assigned to Agent " << x.ID << endl;
+                return;
+            }
+        }
+
+        cout << "No Agent is freee" << endl;
     }
-}
 
-int main(){
+    void printAgents(){
+        for(auto x : agents){
+            x.print();
+        }
+    }
+};
+
+class resolutionLog{
+    public:
+    // here vector is used instead of array
+    // as array needs to have another integer of n
+    // which will take its total size
+    // so using vector for simplicity
+    vector<Ticket> log;
+    int top;
+
+    resolutionLog() : top(-1) {}
+
+    void push(Ticket* ticket){
+        log.push_back(*ticket);
+        ++top;
+    }
+
+    void pop(){
+        if(top == -1){
+            cout << "stack is empty" << endl;
+        }else{
+            log.pop_back();
+            top--;
+        }
+    }
+    Ticket peek(){
+        if(top == -1){
+            cout << "stack is empty" << endl;
+            return Ticket();
+        }else{
+            return log[top];
+        }
+    }
+    bool isEmpty(){
+        return top == -1;
+    }
+};
+
+class PendingTicket{
+    public:
+    int cap;
+    int front;
+    int rear;
+    vector<Ticket> pendings;
+
+    PendingTicket() : cap(1000){
+        front = rear = -1;
+    }
+
+    void enqueue(Ticket ticket){
+        if((rear + 1) % cap == front){
+            cout << "queue is full" << endl;
+        }else{
+            if(front == -1)
+                front = 0;
+
+            rear = (rear + 1) % cap;
+            pendings.push_back(ticket);
+        }
+    }
+
+    Ticket dequeue(){
+        if(rear == -1  || front == -1 || front > rear){
+            cout << "Queue is empty" << endl;
+            return Ticket();
+        }else{
+            Ticket ticket = pendings[front];
+            pendings.erase(pendings.begin() + front);
+            front = (front + 1) % cap;
+            return ticket;
+        }
+    }
+
+    Ticket Front(){
+        if(rear == -1 || front == rear){
+            cout << "Queue is Empty" << endl;
+        }else{
+            return pendings[front];
+        }
+    }
+
+    bool isEmpty(){
+        return (rear == -1 || front == rear);
+    }
+
+    bool isFull(){
+        return (rear + 1) % cap == front;
+    }
+};
+
+int main() {
+    // Step 1: Initialize the classes
     TicketManagement tm;
+    AgentManagement am;
+    resolutionLog rl;
+    PendingTicket pt;
 
-    // Add sample tickets
+    // Step 2: Add sample tickets
+    cout << "Adding tickets to the Ticket Management system..." << endl;
     tm.addTicket(1, "Alice", 3, "Issue with login");
     tm.addTicket(2, "Bob", 1, "System crash");
     tm.addTicket(3, "Charlie", 2, "Password reset required");
 
-    cout << "Tickets before sorting:\n";
-    tm.print();
+    // Add sample agents
+    cout << "Adding agents to the Agent Management system..." << endl;
+    am.addAgent(101, "Agent Smith");
+    am.addAgent(102, "Agent Johnson");
 
-    cout << "Which sorting algorithm do you wanna use? \nMergeSort (1)\nQuicksort (2) \nBubbleSort (3) \nSelectionSort (4) \nInsertion Sort (5)" << endl;
+    // Step 3: Assign tickets to agents
+    cout << "Assigning tickets to agents..." << endl;
+    am.assignTickets(1);
+    am.assignTickets(2);
+
+    // Step 4: Enqueue some tickets in the pending queue
+    cout << "Adding tickets to the pending queue..." << endl;
+    pt.enqueue(*tm.head); // Add the first ticket
+    pt.enqueue(*(tm.head->next)); // Add the second ticket
+
+    // Step 5: Sorting tickets
+    cout << "Choose a sorting algorithm:\n1. Merge Sort\n2. Quick Sort\n3. Bubble Sort\n4. Selection Sort\n5. Insertion Sort" << endl;
     int choice;
     cin >> choice;
 
-
-    cout << "Enter sorting attribute (priority, creationTime, customerName): ";
+    cout << "Enter attribute to sort by (priority, creationTime, customerName): ";
     string attribute;
     cin >> attribute;
 
-
     tm.sortTickets(choice, attribute);
-   
-
-
+    
     cout << "\nTickets after sorting by " << attribute << ":\n";
     tm.print();
 
+    // Step 6: Resolve tickets
+    cout << "Resolving tickets and moving them to the resolution log..." << endl;
+    while (!pt.isEmpty()) {
+        Ticket resolvedTicket = pt.dequeue();
+        rl.push(&resolvedTicket);
+    }
+
+    cout << "\nResolved tickets:\n";
+    while (!rl.isEmpty()) {
+        Ticket ticket = rl.peek();
+        cout << "Resolved Ticket ID: " << ticket.ID << ", Name: " << ticket.name << endl;
+        rl.pop();
+    }
+
+    // Display agents and their assigned tickets
+    cout << "\nCurrent agents and their tickets:\n";
+    am.printAgents();
+
+    return 0;
 }
