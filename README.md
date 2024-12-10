@@ -19,29 +19,30 @@ using namespace std;
 #define sz(x) (int)(x.size())     // Get size of a container
 #define endl '\n'                 // Faster line breaks (avoids flush)
 ```
-
+```
 const int MOD = 1e9 + 7;          // Common modulo constant
 const int INF = 1e18;             // Large number for infinity
+```
 
 // Debugging
-#define debug(x) cerr << #x <<" = "; _print(x); cerr << endl;
+```#define debug(x) cerr << #x <<" = "; _print(x); cerr << endl;
 template <typename T> void _print(T x) { cerr << x; } // For single values
 template <typename T> void _print(vector<T> v) { cerr << "[ "; for (T i : v) cerr << i << " "; cerr << "]"; }
-
+```
 // Input/Output Optimization
-ios_base::sync_with_stdio(false);
+```ios_base::sync_with_stdio(false);
 cin.tie(nullptr);
 cout.tie(nullptr);
-
+```
 # LOOPS
-
+```
 #define rep(i, a, b) for (int i = a; i < b; i++)         // Forward loop
 #define repr(i, a, b) for (int i = a; i >= b; i--)       // Reverse loop
 #define trav(a, x) for (auto &a : x)                    // Traversing a container
-
+```
 
 # COMMON FUNCTIONS
-
+```
 int gcd(int a, int b) { return b == 0 ? a : gcd(b, a % b); } // GCD
 int lcm(int a, int b) { return (a / gcd(a, b)) * b; }        // LCM
 
@@ -58,10 +59,10 @@ int power(int a, int b, int m = MOD) {                       // Exponentiation
     }
     return res;
 }
-
+```
 
 # DATA STRUCTURES
-
+```
 #define pii pair<int, int>              // Pair of integers
 #define vi vector<int>                  // Vector of integers
 #define vvi vector<vector<int>>         // 2D vector of integers
@@ -71,19 +72,19 @@ int power(int a, int b, int m = MOD) {                       // Exponentiation
 #define uset unordered_set              // Unordered set
 #define pqmin priority_queue<int, vector<int>, greater<int>> // Min-heap
 #define pqmax priority_queue<int>       // Max-heap
-
+```
 
 # INPUT MACROS
-
+```
 #define read(x) for (auto &i : x) cin >> i; // Reading a container
 #define print(x) for (auto &i : x) cout << i << " "; cout << endl; // Printing a container
-
+```
 // Read a matrix
-#define read_matrix(mat, n, m) for (int i = 0; i < n; i++) for (int j = 0; j < m; j++) cin >> mat[i][j];
-
+```#define read_matrix(mat, n, m) for (int i = 0; i < n; i++) for (int j = 0; j < m; j++) cin >> mat[i][j];
+```
 
 # UTILITIES
-
+```
 #define yes cout << "YES" << endl      // Print YES
 #define no cout << "NO" << endl        // Print NO
 #define fast_io ios_base::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr);
@@ -99,13 +100,13 @@ template <typename T>                   // Template for finding max
 T max_element_index(vector<T> &v) {
     return distance(v.begin(), max_element(all(v)));
 }
-
+```
 
 # TEMPLATES FOR CP
 
 
 ### 1D GRID
-void solve() {
+```void solve() {
     int n, x;
     cin >> n >> x;
     vector<int> coins(n);
@@ -121,9 +122,9 @@ int32_t main() {
     return 0;
 }
 
-
+```
 ### 2D GRID
-
+```
 int dx[] = {-1, 0, 1, 0};   // Movement in 4 directions (N, E, S, W)
 int dy[] = {0, 1, 0, -1};
 
@@ -139,10 +140,10 @@ void grid_problem() {
 
     // Process the grid
 }
-
+```
 
 ## BINARY SEARCH
-
+```
 int binary_search(vector<int> &arr, int target) {
     int low = 0, high = arr.size() - 1;
     while (low <= high) {
@@ -154,9 +155,9 @@ int binary_search(vector<int> &arr, int target) {
     return -1; // Element not found
 }
 
-
+```
 ## DIJKSTRAS
-
+```
 vector<int> dijkstra(int src, int n, vector<vector<pii>> &adj) {
     vector<int> dist(n, INF);
     priority_queue<pii, vector<pii>, greater<pii>> pq;
@@ -175,4 +176,4 @@ vector<int> dijkstra(int src, int n, vector<vector<pii>> &adj) {
     }
     return dist;
 }
- 2
+ ```
