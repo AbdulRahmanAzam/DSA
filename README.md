@@ -6,10 +6,13 @@
 
 1. [Basic Setup](#BASIC-SETUP-FOR-CP)  
 2. [Loops](#LOOPS)  
-3. [Setup Guide](#setup-guide)  
-4. [Included Templates](#included-templates)  
-5. [Usage Instructions](#usage-instructions)  
-6. [Contributing](#contributing)  
+3. [Common Functions](#COMMON-FUNCTIONS)  
+4. [DATA STRUCTURES](#DATA-STRUCTURES)  
+5. [INPUT MACROS](#INPUT-MACROS)  
+6. [UTILITIES](#UTILITIES)
+7. [TEMPLATES](#TEMPLATES-FOR-CP)
+8. [Binary Search](#Binary-Search)
+9. [DIJKSTRAS](#DIJKSTRAS)  
 
 
 # BASIC SETUP FOR CP
@@ -91,7 +94,7 @@ int power(int a, int b, int m = MOD) {                       // Exponentiation
 #define read(x) for (auto &i : x) cin >> i; // Reading a container
 #define print(x) for (auto &i : x) cout << i << " "; cout << endl; // Printing a container
 ```
-// Read a matrix
+- ### Read a matrix
 ```
 #define read_matrix(mat, n, m) for (int i = 0; i < n; i++) for (int j = 0; j < m; j++) cin >> mat[i][j];
 ```
@@ -116,7 +119,6 @@ T max_element_index(vector<T> &v) {
 ```
 
 # TEMPLATES FOR CP
-
 
 ### 1D GRID
 ```
