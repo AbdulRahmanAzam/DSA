@@ -2,9 +2,17 @@
 [Guide to Competitive Programming_ Learning and Improving Algorithms Through Contests ( PDFDrive ).pdf](https://github.com/user-attachments/files/18078765/Guide.to.Competitive.Programming_.Learning.and.Improving.Algorithms.Through.Contests.PDFDrive.pdf)
 
 
+## 📂 Table of Contents
+
+1. [Basic Setup](#BASIC-SETUP-FOR-CP)  
+2. [Loops](#LOOPS)  
+3. [Setup Guide](#setup-guide)  
+4. [Included Templates](#included-templates)  
+5. [Usage Instructions](#usage-instructions)  
+6. [Contributing](#contributing)  
+
 
 # BASIC SETUP FOR CP
-# INLCUDING TEMPLATES AND MACROS
 ```
 #include <bits/stdc++.h>
 using namespace std;
