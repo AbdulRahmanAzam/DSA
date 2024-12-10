@@ -24,13 +24,15 @@ const int MOD = 1e9 + 7;          // Common modulo constant
 const int INF = 1e18;             // Large number for infinity
 ```
 
-// Debugging
-```#define debug(x) cerr << #x <<" = "; _print(x); cerr << endl;
+ - ### Debugging
+```
+#define debug(x) cerr << #x <<" = "; _print(x); cerr << endl;
 template <typename T> void _print(T x) { cerr << x; } // For single values
 template <typename T> void _print(vector<T> v) { cerr << "[ "; for (T i : v) cerr << i << " "; cerr << "]"; }
 ```
-// Input/Output Optimization
-```ios_base::sync_with_stdio(false);
+- ### Input/Output Optimization
+```
+ios_base::sync_with_stdio(false);
 cin.tie(nullptr);
 cout.tie(nullptr);
 ```
@@ -45,11 +47,13 @@ cout.tie(nullptr);
 ```
 int gcd(int a, int b) { return b == 0 ? a : gcd(b, a % b); } // GCD
 int lcm(int a, int b) { return (a / gcd(a, b)) * b; }        // LCM
-
+```
+```
 int mod_add(int a, int b) { return (a + b) % MOD; }          // Modulo addition
 int mod_sub(int a, int b) { return ((a - b) % MOD + MOD) % MOD; } // Modulo subtraction
 int mod_mul(int a, int b) { return (a * b) % MOD; }          // Modulo multiplication
-
+```
+```
 int power(int a, int b, int m = MOD) {                       // Exponentiation
     int res = 1;
     while (b) {
@@ -80,7 +84,8 @@ int power(int a, int b, int m = MOD) {                       // Exponentiation
 #define print(x) for (auto &i : x) cout << i << " "; cout << endl; // Printing a container
 ```
 // Read a matrix
-```#define read_matrix(mat, n, m) for (int i = 0; i < n; i++) for (int j = 0; j < m; j++) cin >> mat[i][j];
+```
+#define read_matrix(mat, n, m) for (int i = 0; i < n; i++) for (int j = 0; j < m; j++) cin >> mat[i][j];
 ```
 
 # UTILITIES
@@ -106,7 +111,8 @@ T max_element_index(vector<T> &v) {
 
 
 ### 1D GRID
-```void solve() {
+```
+void solve() {
     int n, x;
     cin >> n >> x;
     vector<int> coins(n);
@@ -114,7 +120,8 @@ T max_element_index(vector<T> &v) {
 
     // Add logic for solving the problem
 }
-
+```
+```
 int32_t main() {
     fast_io;
     int t; cin >> t;
