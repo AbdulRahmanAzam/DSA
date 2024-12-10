@@ -9,7 +9,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Macros for faster typing
+ - Macros for faster typing
 ```
 #define int long long             // For using long long by default
 #define pb push_back              // Shorter syntax for push_back
