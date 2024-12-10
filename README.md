@@ -10,6 +10,7 @@
 using namespace std;
 
 // Macros for faster typing
+```
 #define int long long             // For using long long by default
 #define pb push_back              // Shorter syntax for push_back
 #define mp make_pair              // Shorter syntax for make_pair
@@ -17,6 +18,7 @@ using namespace std;
 #define rall(x) x.rbegin(), x.rend() // Reverse traversal
 #define sz(x) (int)(x.size())     // Get size of a container
 #define endl '\n'                 // Faster line breaks (avoids flush)
+```
 
 const int MOD = 1e9 + 7;          // Common modulo constant
 const int INF = 1e18;             // Large number for infinity
